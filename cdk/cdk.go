@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
+	//awsapigatewayv2 "github.com/aws/aws-cdk-go/awscdkapigatewayv2alpha/v2"
+	//awsapigatewayv2integrations "github.com/aws/aws-cdk-go/awscdkapigatewayv2integrationsalpha/v2"
 	awslambdago "github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2"
 	"github.com/aws/constructs-go/constructs/v10"
 	jsii "github.com/aws/jsii-runtime-go"
@@ -53,15 +55,11 @@ func env() *awscdk.Environment {
 	// Account/Region-dependent features and context lookups will not work, but a
 	// single synthesized template can be deployed anywhere.
 	//---------------------------------------------------------------------------
-	//return nil
+	return nil
 
 	// Uncomment if you know exactly what account and region you want to deploy
 	// the stack to. This is the recommendation for production stacks.
 	//---------------------------------------------------------------------------
-	return &awscdk.Environment{
-		Account: jsii.String("921821306432"),
-		Region:  jsii.String("us-east-1"),
-	}
 
 	// Uncomment to specialize this stack for the AWS Account and Region that are
 	// implied by the current CLI configuration. This is recommended for dev

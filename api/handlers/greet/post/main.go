@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/a-h/rest-api/cdk/api/handlers/greet"
+	"github.com/a-h/rest-api/api/handlers/greet"
 	"github.com/akrylysov/algnhsa"
 )
 
