@@ -2,10 +2,9 @@ package main
 
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
+	"github.com/aws/aws-cdk-go/awscdk/v2/awsapigateway"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
 
-	//awsapigatewayv2 "github.com/aws/aws-cdk-go/awscdkapigatewayv2alpha/v2"
-	//awsapigatewayv2integrations "github.com/aws/aws-cdk-go/awscdkapigatewayv2integrationsalpha/v2"
 	awslambdago "github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2"
 	"github.com/aws/constructs-go/constructs/v10"
 	jsii "github.com/aws/jsii-runtime-go"
@@ -22,17 +21,21 @@ func NewCdkStack(scope constructs.Construct, id string, props *CdkStackProps) aw
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
-	awslambdago.NewGoFunction(stack, jsii.String("greetHandler"), &awslambdago.GoFunctionProps{
+	greetPost := awslambdago.NewGoFunction(stack, jsii.String("greetHandler"), &awslambdago.GoFunctionProps{
 		Runtime: awslambda.Runtime_GO_1_X(),
 		Entry:   jsii.String("../api/handlers/greet/post"),
 	})
 
-	// The code that defines your stack goes here
+	restAPI := awsapigateway.NewRestApi(stack, jsii.String("apiGateway"), &awsapigateway.RestApiProps{})
 
-	// example resource
-	// queue := awssqs.NewQueue(stack, jsii.String("CdkQueue"), &awssqs.QueueProps{
-	// 	VisibilityTimeout: awscdk.Duration_Seconds(jsii.Number(300)),
-	// })
+	greetRoot := restAPI.Root().AddResource(jsii.String("greet"), &awsapigateway.ResourceOptions{})
+	greetPostIntegration := awsapigateway.NewLambdaIntegration(greetPost, &awsapigateway.LambdaIntegrationOptions{})
+	greetRoot.AddMethod(jsii.String("POST"), greetPostIntegration, &awsapigateway.MethodOptions{})
+
+	awscdk.NewCfnOutput(stack, jsii.String("url"), &awscdk.CfnOutputProps{
+		ExportName: jsii.String("greetUrl"),
+		Value:      restAPI.Url(),
+	})
 
 	return stack
 }
