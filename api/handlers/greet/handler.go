@@ -1,8 +1,7 @@
-package main
+package greet
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -41,12 +40,4 @@ func (h HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to encode JSON", http.StatusInternalServerError)
 		return
 	}
-}
-
-func main() {
-	greeter := func(name string) string {
-		return fmt.Sprintf("你好，%s", name)
-	}
-	http.Handle("/", NewHomeHandler(greeter))
-	http.ListenAndServe("localhost:8000", nil)
 }
