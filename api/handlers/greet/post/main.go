@@ -10,7 +10,6 @@ func greeting(name string) string {
 }
 
 func main() {
-
 	h := greet.NewHomeHandler(greeting)
 	algnhsa.ListenAndServe(h, nil)
 }

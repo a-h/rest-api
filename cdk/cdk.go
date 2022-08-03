@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
+
 	//awsapigatewayv2 "github.com/aws/aws-cdk-go/awscdkapigatewayv2alpha/v2"
 	//awsapigatewayv2integrations "github.com/aws/aws-cdk-go/awscdkapigatewayv2integrationsalpha/v2"
 	awslambdago "github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2"
@@ -23,7 +24,7 @@ func NewCdkStack(scope constructs.Construct, id string, props *CdkStackProps) aw
 
 	awslambdago.NewGoFunction(stack, jsii.String("greetHandler"), &awslambdago.GoFunctionProps{
 		Runtime: awslambda.Runtime_GO_1_X(),
-		Entry:   jsii.String("../api/handlers/greet"),
+		Entry:   jsii.String("../api/handlers/greet/post"),
 	})
 
 	// The code that defines your stack goes here
